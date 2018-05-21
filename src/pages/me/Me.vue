@@ -10,6 +10,8 @@
 </template>
 
 <script>
+  import YearProgress from '@/components/YearProgress'
+
   export default {
     data() {
       return {
@@ -21,7 +23,15 @@
     },
     methods: {
       scanBook() {
+        wx.scanCode({
+          success: (res) => {
+            console.log(res)
+          }
+        })
       }
+    },
+    components: {
+      YearProgress
     }
   }
 </script>
