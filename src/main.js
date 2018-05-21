@@ -9,7 +9,7 @@ app.$mount()
 
 export default {
   config: {
-    pages: [],
+    pages: ['^pages/comments/main'],
     window: {
       'backgroundTextStyle': 'light',
       'navigationBarBackgroundColor': '#EA5149',
