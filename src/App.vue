@@ -1,7 +1,10 @@
 <script>
+  import {get} from './util'
+
   export default {
-    create() {
-      console.log('小程序启动了')
+    async created() {
+      const res = await get('/weapp/demo')
+      console.log('小程序启动了: ', res)
     }
   }
 </script>
