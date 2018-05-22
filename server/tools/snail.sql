@@ -1,0 +1,15 @@
+create table books(
+id int not null auto_increment primary key,
+isbn varchar(20) not null default '',
+openid varchar(50) not null default '',
+title varchar(100) not null default '',
+image varchar(200) not null default '',
+alt varchar(100) not null default '',
+publisher varchar(100) not null default '',
+summary varchar(1000) not null default '',
+price varchar(100) not null default '',
+rate float not null default 0,
+tags varchar(100) not null default '',
+rate varchar(100) not null default '',
+author varchar(100) not null default '',
+)

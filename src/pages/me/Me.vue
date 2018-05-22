@@ -12,7 +12,7 @@
 
 <script>
   import YearProgress from '@/components/YearProgress'
-  import {showSuccess, post} from '@/util'
+  import {showSuccess, showModal, post} from '@/util'
   import qcloud from 'wafer2-client-sdk'
   import config from '@/config'
 
@@ -38,8 +38,9 @@
           isbn,
           openId: this.userinfo.openId
         })
+
         if (res.code === 0 && res.data.title) {
-          showSuccess('添加成功')
+          showModal('添加成功', `《${res.data.title}》添加成功`)
         }
       },
       scanBook() {
