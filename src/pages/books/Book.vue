@@ -1,13 +1,14 @@
 <template>
   <div>
     <div>
-      <div v-for="(book,index) in books" :key="index">{{book.title}}</div>
+      <Card v-for="(book,index) in books" :key="index" :book="book"></Card>
     </div>
   </div>
 </template>
 
 <script>
   import {get} from '@/util'
+  import Card from '@/components/Card'
 
   export default {
     data() {
@@ -24,6 +25,9 @@
     },
     mounted() {
       this.getList()
+    },
+    components: {
+      Card
     }
   }
 </script>
