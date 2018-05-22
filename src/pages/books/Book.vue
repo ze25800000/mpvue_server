@@ -16,6 +16,7 @@
   export default {
     data() {
       return {
+        tops: [],
         books: [],
         page: 0,
         more: true
@@ -41,6 +42,10 @@
           console.log(this.books)
         }
         wx.hideNavigationBarLoading()
+      },
+      async getTop() {
+        const tops = await get('/weapp/top')
+        this.tops = tops.list
       }
     },
     onPullDownRefresh() {
@@ -55,6 +60,7 @@
     },
     mounted() {
       this.getList(true)
+      this.getTop()
     },
     components: {
       Card
