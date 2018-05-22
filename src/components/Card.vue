@@ -21,12 +21,12 @@
           浏览量:{{book.count}}
         </div>
         <div class="left">
-
           {{book.author}}
         </div>
       </div>
       <div class="row">
         <div class="right">
+          {{book.user_info.nickName}}
         </div>
         <div class="left">
           {{book.publisher}}

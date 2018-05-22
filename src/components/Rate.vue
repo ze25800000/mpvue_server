@@ -15,7 +15,7 @@
     },
     computed: {
       style() {
-        return `width:${parseInt(this.value / 2)}em`
+        return `width:${parseInt(this.value / 2.2)}em`
       }
     }
   }
