@@ -6,6 +6,9 @@
 </script>
 
 <style>
+  .text-primary {
+    color: #ea4a49;
+  }
   .btn {
     color: white;
     background: #ea4a49;

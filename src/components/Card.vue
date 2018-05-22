@@ -39,8 +39,13 @@
 </template>
 
 <script>
+  import Rate from '@/components/Rate'
+
   export default {
-    props: ['book']
+    props: ['book'],
+    components: {
+      Rate
+    }
   }
 </script>
 
