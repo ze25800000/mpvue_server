@@ -2,6 +2,9 @@
   <div>
     <div>
       <Card v-for="(book,index) in books" :key="index" :book="book"></Card>
+      <p class="text-footer" v-if="!more">
+        没有更多数据
+      </p>
     </div>
   </div>
 </template>
@@ -13,23 +16,45 @@
   export default {
     data() {
       return {
-        books: []
+        books: [],
+        page: 0,
+        more: true
       }
     },
     methods: {
-      async getList() {
+      async getList(init) {
+        if (init) {
+          this.page = 0
+          this.more = true
+        }
         wx.showNavigationBarLoading()
-        const books = await get('/weapp/booklist')
+        const books = await get('/weapp/booklist', {page: this.page})
         this.books = books.data.list
-        wx.stopPullDownRefresh()
+        if (this.books.length < 10 && this.page > 0) {
+          this.more = false
+        }
+        if (init) {
+          this.books = books.data.list
+          wx.stopPullDownRefresh()
+        } else {
+          this.books = this.book.concat(books.data.list)
+          console.log(this.books)
+        }
         wx.hideNavigationBarLoading()
       }
     },
     onPullDownRefresh() {
-      this.getList()
+      this.getList(true)
+    },
+    onReachBottom() {
+      if (!this.more) {
+        return false
+      }
+      this.page = this.page + 1
+      this.getList(false)
     },
     mounted() {
-      this.getList()
+      this.getList(true)
     },
     components: {
       Card
