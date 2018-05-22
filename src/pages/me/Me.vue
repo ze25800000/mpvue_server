@@ -3,15 +3,16 @@
     <div class="userinfo" @click="login">
       <img :src="userinfo.avatarUrl">
       <p>{{userinfo.nickName}}</p>
+      <button open-type="getUserInfo">获取用户信息</button>
     </div>
     <YearProgress></YearProgress>
-    <button v-if="userinfo.openId" @click="scanBook" class="btn">添加图书</button>
+    <button @click="scanBook" class="btn">添加图书</button>
   </div>
 </template>
 
 <script>
   import YearProgress from '@/components/YearProgress'
-  import {showSuccess} from '@/util'
+  import {showSuccess, post} from '@/util'
   import qcloud from 'wafer2-client-sdk'
   import config from '@/config'
 
@@ -31,9 +32,23 @@
       }
     },
     methods: {
+      async addBook(isbn) {
+        console.log(this.userinfo.openId)
+        let res = await post('/weapp/addbook', {
+          isbn,
+          openId: this.userinfo.openId
+        })
+        if (res.code === 0 && res.data.title) {
+          showSuccess('添加成功')
+        }
+      },
       scanBook() {
+        let _this = this
         wx.scanCode({
-          success: (res) => {
+          success(res) {
+            if (res.result) {
+              _this.addBook(res.result)
+            }
             console.log(res)
           }
         })
@@ -44,7 +59,7 @@
         if (!userInfo) {
           qcloud.setLoginUrl(config.loginUrl)
           qcloud.login({
-            success: function (userInfo) {
+            success(userInfo) {
               qcloud.request({
                 url: config.userUrl,
                 login: true,
