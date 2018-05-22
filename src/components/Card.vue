@@ -50,6 +50,14 @@
         return '/pages/detail/main?id=' + this.book.id
       }
     },
+    methods: {
+      preview() {
+        wx.previewImage({
+          current: this.book.image,
+          urls: [this.book.image]
+        })
+      }
+    },
     components: {
       Rate
     }

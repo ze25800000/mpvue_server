@@ -1,6 +1,7 @@
 <template>
   <div>
     <div>
+      <TopSwiper :tops='tops'></TopSwiper>
       <Card v-for="(book,index) in books" :key="index" :book="book"></Card>
       <p class="text-footer" v-if="!more">
         没有更多数据
@@ -12,6 +13,7 @@
 <script>
   import {get} from '@/util'
   import Card from '@/components/Card'
+  import TopSwiper from '@/components/TopSwiper'
 
   export default {
     data() {
@@ -45,7 +47,7 @@
       },
       async getTop() {
         const tops = await get('/weapp/top')
-        this.tops = tops.list
+        this.tops = tops.data.list
       }
     },
     onPullDownRefresh() {
@@ -63,7 +65,8 @@
       this.getTop()
     },
     components: {
-      Card
+      Card,
+      TopSwiper
     }
   }
 </script>
