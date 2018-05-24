@@ -20,12 +20,36 @@
         </div>
       </div>
     </div>
+    <div class="detail">
+      <img class="avatar" :src="userinfo.image" mode="aspectFit">
+      {{userinfo.name}}
+      <div class="right text-primary">
+        {{info.rate}}
+        <Rate :value='info.rate'></Rate>
+      </div>
+    </div>
+    <div class="detail">
+      {{info.publisher}}
+      <div class="right">
+        {{info.price}}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+  import Rate from '@/components/Rate'
+
   export default {
-    props: ['info']
+    props: ['info'],
+    computed: {
+      userinfo() {
+        return this.info.user_info || {}
+      }
+    },
+    components: {
+      Rate
+    }
   }
 </script>
 
@@ -62,8 +86,8 @@
       }
     }
     .thumb {
-      width: 750rpx;
-      height: 500rpx;
+      width: 750 rpx;
+      height: 500 rpx;
       overflow: hidden;
       position: relative;
       .back {
@@ -73,16 +97,16 @@
       .img {
         position: absolute;
         width: 100%;
-        height: 300rpx;
+        height: 300 rpx;
         left: 0;
-        top: 30rpx;
+        top: 30 rpx;
       }
       .info {
         color: white;
         position: absolute;
         width: 100%;
         left: 0;
-        top: 330rpx;
+        top: 330 rpx;
         text-align: center;
         .title {
           font-size: 20px;
