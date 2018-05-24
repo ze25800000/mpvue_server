@@ -2,7 +2,7 @@
   <div>
     <BookInfo :info="info"></BookInfo>
     <CommentList :comments="comments"></CommentList>
-    <div class="comment">
+    <div class="comment" v-if="showAdd">
       <textarea v-model='comment'
                 class='textarea'
                 :maxlength='100'
@@ -19,6 +19,10 @@
       </div>
       <button class="btn" @click="addComment">评论</button>
     </div>
+    <div v-else class="text-footer">
+      未登录或者已经评论过了
+    </div>
+    <button open-type="share" class="btn">转发给好友</button>
   </div>
 </template>
 
@@ -37,6 +41,17 @@
         phone: '',
         userinfo: '',
         comments: []
+      }
+    },
+    computed: {
+      showAdd() {
+        if (!this.userinfo.openId) {
+          return false
+        }
+        if (this.comments.some(v => v.openid === this.userinfo.openId)) {
+          return false
+        }
+        return true
       }
     },
     methods: {
@@ -64,6 +79,7 @@
         }
         try {
           post('/weapp/addcomment', data)
+          this.getComments()
           this.comment = ''
         } catch (e) {
           showModal('失败', e.msg)
