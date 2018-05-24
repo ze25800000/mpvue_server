@@ -33,7 +33,8 @@
         comment: '',
         location: '',
         phone: '',
-        userinfo: ''
+        userinfo: '',
+        comments: []
       }
     },
     methods: {
@@ -43,6 +44,10 @@
           title: info.data.title
         })
         this.info = info.data
+      },
+      async getComments() {
+        const comments = await get('/weapp/commentlist', {bookid: this.bookid})
+        this.comments = comments
       },
       addComment() {
         if (!this.comment) {
@@ -103,6 +108,7 @@
     mounted() {
       this.bookid = this.$root.$mp.query.id
       this.getDetail()
+      this.getComments()
       const userinfo = wx.getStorageSync('userinfo')
       this.userinfo = userinfo
     },
