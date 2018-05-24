@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>图书ID：{{bookid}}</div>
     <BookInfo :info="info"></BookInfo>
   </div>
 </template>
@@ -34,7 +33,6 @@
     }
   }
 </script>
-
-<style scoped>
+<style lang='scss'>
 
 </style>
