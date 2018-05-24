@@ -116,10 +116,10 @@
   .comment {
     margin-top: 10px;
     .textarea {
-      width: 730 rpx;
-      height: 200 rpx;
+      width: 730rpx;
+      height: 200rpx;
       background: #eee;
-      padding: 10 rpx;
+      padding: 10rpx;
     }
     .location {
       margin-top: 10px;

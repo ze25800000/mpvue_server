@@ -92,8 +92,8 @@
       }
     }
     .thumb {
-      width: 750 rpx;
-      height: 500 rpx;
+      width: 750rpx;
+      height: 500rpx;
       overflow: hidden;
       position: relative;
       .back {
@@ -103,16 +103,16 @@
       .img {
         position: absolute;
         width: 100%;
-        height: 300 rpx;
+        height: 300rpx;
         left: 0;
-        top: 30 rpx;
+        top: 30rpx;
       }
       .info {
         color: white;
         position: absolute;
         width: 100%;
         left: 0;
-        top: 330 rpx;
+        top: 330rpx;
         text-align: center;
         .title {
           font-size: 20px;
