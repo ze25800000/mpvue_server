@@ -55,7 +55,7 @@
     margin-top: 5px;
     .slide-image {
       width: 33%;
-      height: 250 rpx;
+      height: 250rpx;
     }
   }
 </style>
