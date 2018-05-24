@@ -1,6 +1,7 @@
 <template>
   <div>
     <BookInfo :info="info"></BookInfo>
+    <CommentList :comments="comments"></CommentList>
     <div class="comment">
       <textarea v-model='comment'
                 class='textarea'
@@ -24,6 +25,7 @@
 <script>
   import {get, post, showModal} from '@/util'
   import BookInfo from '@/components/BookInfo'
+  import CommentList from '@/components/CommentList'
 
   export default {
     data() {
@@ -46,8 +48,8 @@
         this.info = info.data
       },
       async getComments() {
-        const comments = await get('/weapp/commentlist', {bookid: this.bookid})
-        this.comments = comments
+        const comments = await get('/weapp/CommentList', {bookid: this.bookid})
+        this.comments = comments.data.list
       },
       addComment() {
         if (!this.comment) {
@@ -66,7 +68,6 @@
         } catch (e) {
           showModal('失败', e.msg)
         }
-        console.log(data)
       },
       getGeo(e) {
         const ak = 'un0pGn8UGQyMl1wfCEmiMyza94GNAbuF'
@@ -110,10 +111,13 @@
       this.getDetail()
       this.getComments()
       const userinfo = wx.getStorageSync('userinfo')
-      this.userinfo = userinfo
+      if (userinfo) {
+        this.userinfo = userinfo
+      }
     },
     components: {
-      BookInfo
+      BookInfo,
+      CommentList
     }
   }
 </script>
