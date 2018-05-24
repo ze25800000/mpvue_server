@@ -34,6 +34,12 @@
         {{info.price}}
       </div>
     </div>
+    <div class="tags">
+      <div class="badge" :key="index" v-for="(tag,index) in info.tags">{{tag}}</div>
+    </div>
+    <div class="summary">
+      <p v-for="(sum,index) in info.summary" :key="index">{{sum}}</p>
+    </div>
   </div>
 </template>
 
