@@ -42,7 +42,34 @@
         })
         this.info = info.data
       },
-      getGeo() {
+      getGeo(e) {
+        const ak = 'un0pGn8UGQyMl1wfCEmiMyza94GNAbuF'
+        let url = 'http://api.map.baidu.com/geocoder/v2/'
+        let _this = this
+        if (e.target.value) {
+          wx.getLocation({
+            success(geo) {
+              let latitude = geo.latitude
+              let longitude = geo.longitude
+              wx.request({
+                url,
+                data: {
+                  ak,
+                  location: `${latitude},${longitude}`,
+                  output: 'json'
+                },
+                success(res) {
+                  console.log(res)
+                  if (res.data.status === 0) {
+                    _this.location = res.data.result.addressComponent.district
+                  } else {
+                    _this.location = '未知地理'
+                  }
+                }
+              })
+            }
+          })
+        }
       },
       getPhone(e) {
         if (e.target.value) {
