@@ -1,11 +1,17 @@
 const {mysql} = require('../qcloud')
 
 module.exports = async (ctx) => {
-  const {bookid} = ctx.request.query
-  const comments = await mysql('comments')
+  const {bookid, openid} = ctx.request.query
+  const mysqlSelect = mysql('comments')
     .select('comments.*', 'csessioninfo.user_info')
     .join('csessioninfo', 'comments.openid', 'csessioninfo.open_id')
-    .where('bookid', bookid)
+  let comments
+  if (bookid) {
+    comments = await mysqlSelect.where('bookid', bookid)
+  } else if (openid) {
+    comments = await mysqlSelect.where('openid', openid)
+  }
+
   ctx.state.data = {
     list: comments.map(v => {
       const info = JSON.parse(v.user_info)
@@ -14,5 +20,5 @@ module.exports = async (ctx) => {
         image: info.avatarUrl
       })
     })
-  }
+  };
 }
