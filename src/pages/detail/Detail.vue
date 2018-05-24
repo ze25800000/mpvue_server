@@ -16,12 +16,13 @@
         <switch color="#ea5a49" :checked="phone" @change="getPhone"></switch>
         <span class="text-primary">{{phone}}</span>
       </div>
+      <button class="btn" @click="addComment">评论</button>
     </div>
   </div>
 </template>
 
 <script>
-  import {get} from '@/util'
+  import {get, post, showModal} from '@/util'
   import BookInfo from '@/components/BookInfo'
 
   export default {
@@ -31,7 +32,8 @@
         info: '',
         comment: '',
         location: '',
-        phone: ''
+        phone: '',
+        userinfo: ''
       }
     },
     methods: {
@@ -41,6 +43,25 @@
           title: info.data.title
         })
         this.info = info.data
+      },
+      addComment() {
+        if (!this.comment) {
+          return
+        }
+        const data = {
+          openid: this.userinfo.openId,
+          bookid: this.bookid,
+          comment: this.comment,
+          phone: this.phone,
+          location: this.location
+        }
+        try {
+          post('/weapp/addcomment', data)
+          this.comment = ''
+        } catch (e) {
+          showModal('失败', e.msg)
+        }
+        console.log(data)
       },
       getGeo(e) {
         const ak = 'un0pGn8UGQyMl1wfCEmiMyza94GNAbuF'
@@ -59,7 +80,6 @@
                   output: 'json'
                 },
                 success(res) {
-                  console.log(res)
                   if (res.data.status === 0) {
                     _this.location = res.data.result.addressComponent.district
                   } else {
@@ -83,6 +103,8 @@
     mounted() {
       this.bookid = this.$root.$mp.query.id
       this.getDetail()
+      const userinfo = wx.getStorageSync('userinfo')
+      this.userinfo = userinfo
     },
     components: {
       BookInfo
@@ -94,10 +116,10 @@
   .comment {
     margin-top: 10px;
     .textarea {
-      width: 730rpx;
-      height: 200rpx;
+      width: 730 rpx;
+      height: 200 rpx;
       background: #eee;
-      padding: 10rpx;
+      padding: 10 rpx;
     }
     .location {
       margin-top: 10px;
