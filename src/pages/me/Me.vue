@@ -3,10 +3,10 @@
     <div class="userinfo" @click="login">
       <img :src="userinfo.avatarUrl">
       <p>{{userinfo.nickName}}</p>
-      <button open-type="getUserInfo">获取用户信息</button>
     </div>
     <YearProgress></YearProgress>
-    <button @click="scanBook" class="btn">添加图书</button>
+    <button v-if='userinfo.openId' @click='scanBook' class='btn'>添加图书</button>
+    <button v-else open-type="getUserInfo" lang="zh_CN" class='btn' @getuserinfo="login">点击登录</button>
   </div>
 </template>
 
